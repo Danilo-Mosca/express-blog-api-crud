@@ -5,12 +5,47 @@ const posts = require("../models/post");    //risorsa dei post
 
 // Funzione della rotta: Index
 function index(req, res) {
-    const objectPosts = {
+    const itemTitle = req.query.titolo; // recupero la prima chiave della query string
+    const itemTag = req.query.tags; // recupero la seconda chiave della query string
+    // Creo una copia dell'oggetto post da filtrare
+    let objectCopy = {
         totalCount: posts.length,
         posts,
     };
+
+    /* FILTRO "AND" CON DUE CONDIZIONI: */
+    // La prima condizione verifica se è presente il tag inserito nella query string 
+    if (itemTag) {
+        objectCopy = posts.filter((value) => value.tags.includes(itemTag));
+    }
+    // La seconda condizione verifica se è presente il titolo inserito nella query string per quell'objectCopy già modificato nell'if sopra (objectCopy non deve essere vuoto), in tal caso stampo verifico anche la seconda condizione
+    if (itemTitle && (objectCopy.length > 0)) {
+        objectCopy = posts.filter((value) => {
+            return value.titolo.toLowerCase().includes(itemTitle.toLowerCase());
+        });
+    }
+    // Mi creo un nuovo oggetto filtrato che conterrà le condizioni verificatesi o meno di sopra
+    let response ={};
+    // Se la lunghezza di objectCopy è > 0 allora ho trovato corrispondenze
+    if (objectCopy.length > 0) {
+        response = {
+            totalCount: objectCopy.length,
+            posts: [...objectCopy],
+        }
+    }
+    // Se invecela lunghezza di objectCopy è  0 allora non ho trovato corrispondenze è stamperò l'intera lista dei post
+    else {
+         console.log("Primo if: " + objectCopy);
+        response = {
+            totalCount: posts.length,
+            posts,
+        }
+    }
+    
+    // Stampo nel terminale
+    console.log(response);
     // Visualizzo il json con la lista completa
-    res.json(objectPosts);
+    res.json(response);
 }
 
 // Funzione della rotta: Show

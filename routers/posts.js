@@ -10,6 +10,9 @@ const controller = require('../controllers/postsController');
 // AVREI POTUTO ANCHE DESTRUTTURARLO CON:
 /*
 const { index,show,store,update,modify,destroy} = require("../controllers/postsController");
+
+COSI' DA PASSARE ALLE ROTTE SOLO IL NOME DELLA FUNZIONE SENZA IL controller.nomeFunzione Esempio:
+router.get("/", index);
 */
 
 
