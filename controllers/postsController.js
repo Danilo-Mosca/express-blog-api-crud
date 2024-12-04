@@ -41,9 +41,6 @@ function index(req, res) {
             posts,
         }
     }
-    
-    // Stampo nel terminale
-    console.log(response);
     // Visualizzo il json con la lista completa
     res.json(response);
 }
@@ -90,7 +87,33 @@ function modify(req, res) {
 
 // Funzione della rotta: Destroy
 function destroy(req, res) {
-    res.send(`Cancellazione del post con id ${req.params.id}`);
+    // Mi ricavo il parametro dinamico con l'id dentro req.param.id
+    const id = parseInt(req.params.id);
+    // La funzione che mi consente di eliminare un array in qualsiasi punto è splice()
+    // Prima però devo trovare l'indice che corrisponde a quell'id. Per fare questo posso usare la funzione findIndex():
+    const index = posts.findIndex(value => value.id === id);
+    // Ora controllo se index non è -1 (se -1 significa che non ha trovato l'indice corrispondente)
+    if (index !== -1) {
+        console.log("Indice: "+ index);
+        
+        // Prima mando su terminale il post che devo cancellare
+        const postDeleted = (posts.at(index));
+        console.log("Post eliminato: ", postDeleted);
+        // Poi uso la funzione splice() per eliminare l'indice specifico dal menu
+        posts.splice(index, 1);
+        // Stampo su terminale la lista dei post aggiornata
+        console.log("Lista aggiornata: ", posts);
+        
+        // Inoltre invio lo stato 204 ovvero: è tutto ok, è stato cancellato tutto con successo ma non c'è un contenuto, non c'è un json che devo visualizzarti
+        res.sendStatus(204);
+    }
+    // Altrimenti rispondo con un errore
+    else {
+        res.status(404).json({
+            error: '404',
+            message: 'Post non trovato',
+        })
+    }
 }
 
 // Esporto tutte le funzioni
