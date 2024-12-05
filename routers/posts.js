@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 // RICHIAMO IL CONTROLLER:
-const controller = require('../controllers/postsController');
+const controller = require('../controllers/postController');
 // AVREI POTUTO ANCHE DESTRUTTURARLO CON:
 /*
 const { index,show,store,update,modify,destroy} = require("../controllers/postsController");
