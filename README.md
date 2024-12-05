@@ -1,6 +1,6 @@
 # express-blog-api-crud
 
-### Esercizio PARTE 1 4/12/2025
+### Esercizio PARTE 1 del 4/12/2025
 ```bash
 *Milestone 1*
 Come prima cosa, creiamo un controller per i nostri post, in una cartella controllers.
@@ -20,7 +20,7 @@ Ora passiamo ad implementare le logiche delle nostre CRUD:
 -Create router, controller e model per un'altra risorsa a vostra discrezione (es. commenti, utenti, ...)
 ```
 
-### Esercizio PARTE 2 5/12/2025
+### Esercizio PARTE 2 del 5/12/2025
 ```bash
 *Milestone 1*
 Per iniziare, andiamo su Postman e prepariamo una nuova chiamata verso la nostra rotta store.

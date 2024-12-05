@@ -1,5 +1,6 @@
 // Importo dalla cartella models la risorsa usata dal controller: posts.js
 const posts = require("../models/post");    //risorsa dei post
+const comments = require("../models/comment.js");    //importo anche la risorsa dei comment per poter visualizzare i commenti associati ai post
 
 /* Funzioni usate nelle rotte per posts: */
 
@@ -53,11 +54,16 @@ function show(req, res) {
         // console.log(value.id);
         return value.id === id;
     });
+    /*** IN BASE ALL'ID INSERITO VISUALIZZO I COMMENTI ASSOCIATI AL POST. SE NON CI SONO COMMENTI PER QUEL POST AVRO' itemComments = [] VUOTO ***/
+    const itemComments = comments.filter((comment) => comment.post_id === id);
+
     // Se l'id dinamico inserito è stato trovato allora lo restituisco il json corrispondente a schermo con un ulteriore chiave "success" impostata a "true"
     if (item) {
+        /*** FACCIO UNA COPIA DI ITEM PER NON MODIFICARE L'ARRAY ITEM ORIGINALE DOVE INSERIRO' TUTTI GLI item e i commenti ASSOCIATI PER QUEL item (post) RICERCATO ***/
+        itemAndComment = { ...item, comments: itemComments };
         res.json({
             success: true,
-            item,
+            itemAndComment,     // INSERISCO L'INTERO OGGETTO itemAndComment INVECE DEL SOLO item PER POTER VISUALIZZARE I COMMENTI ASSOCIATI A QUEL POST RICERCATO TRAMITE id COME PARAMETRO DINAMICO
         });
     }
     // Altrimenti restituisco un json con uno stato 404 e un messaggio indicante che il post non è stato trovato
@@ -136,6 +142,14 @@ function update(req, res) {
     item.contenuto = req.body.contenuto;
     item.immagine = req.body.immagine;
     item.tags = req.body.tags;
+
+    /* Potrei usare anche un ciclo for..in per modificare l'oggetto e assegnargli i nuovi valori. Esempio:
+    for (key in item) {
+        // non devo ciclare sull'id, non va toccato
+        if (key !== 'id') {
+            item[key] = req.body[key];
+        }
+    } */
 
     // Aggiungo il post modificato per aggiornarlo
     res.json(item);
