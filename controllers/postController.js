@@ -47,6 +47,11 @@ function index(req, res) {
 
 // Funzione della rotta: Show
 function show(req, res) {
+
+    /* TEST MIDDLEWARE middleware PER L'INTERCETTAZIONE DI POSSIBILI ERRORI
+    provaFunzioneNonEsistente();    // errore not defined
+    */
+
     // Recupero il parametro dinamico dell'id inserito, faccio il casting (perchè req.params.id restituisce sempre una stringa) e lo assegno alla costante id
     const id = parseInt(req.params.id);
     // Ricerco il post con l'id dinamico specificato e lo confronto con gli id presenti nell'oggetto posts

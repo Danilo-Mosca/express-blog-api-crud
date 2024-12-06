@@ -11,6 +11,8 @@ const postsRouter = require('./routers/posts');
 const commentsRouter = require('./routers/comments');
 // Importo il middleware per la gestione delle rotte non trovate
 const notFound = require('./middlewares/notFound');
+// Importo il middleware per l'intercettazione di possibili errori
+const errorHandler = require('./middlewares/errorsHandler');
 
 /* -------------- SEZIONE MIDDLEWARE: -------------- */
 /* Funzione body-parser che decodifica il request body */
@@ -39,6 +41,8 @@ app.get("/", (req, res) => {
     res.status(404).send("<h1>404 - Pagina non trovata</h1>");
 }); */
 
+// Richiamo la risorsa di middleware per l'intercettazione di possibili errori
+app.use(errorHandler);
 // Richiamo la risorsa di middleware per la gestione delle rotte non trovate
 app.use(notFound);
 // Metto il server in ascolto su localhost e sulla porta 3000 e richiamo la porta 3000
