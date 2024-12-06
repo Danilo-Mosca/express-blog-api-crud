@@ -9,6 +9,8 @@ const PORT = process.env.PORT || 3000;   // La porta la richiamo dal mio file na
 const postsRouter = require('./routers/posts');
 // Importo il router creato sul routers/comments.js
 const commentsRouter = require('./routers/comments');
+// Importo il middleware per la gestione delle rotte non trovate
+const notFound = require('./middlewares/notFound');
 
 /* -------------- SEZIONE MIDDLEWARE: -------------- */
 /* Funzione body-parser che decodifica il request body */
@@ -32,11 +34,13 @@ app.get("/", (req, res) => {
 });
 
 // Rotta di fallback: se la pagina non è stata trovata restituisco un messaggio 404 personalizzato. E' l'ultima rotta da controllare a cascata
-app.all('*', (req, res) => {
+/* app.all('*', (req, res) => {
     // Se lo stato della richiesta non è stato trovato (risponde con un error 404) allora rispondi con il seguente messaggio
     res.status(404).send("<h1>404 - Pagina non trovata</h1>");
-});
+}); */
 
+// Richiamo la risorsa di middleware per la gestione delle rotte non trovate
+app.use(notFound);
 // Metto il server in ascolto su localhost e sulla porta 3000 e richiamo la porta 3000
 app.listen(PORT, () => {
     console.log(`Server avviato su http://localhost:${PORT}`);
