@@ -3,7 +3,7 @@ const express = require('express');
 // Creo un'istanza del server
 const app = express();
 // Assegno la porta 3000 al server
-// const PORT = 3000;   // lo commento perchè l'ho inserito nel file nascosto .env
+const PORT = process.env.PORT || 3000;   // La porta la richiamo dal mio file nascosto ".env" e importo la costante PORT con: process.env.PORT. Oppure se non trovo il file ".env" assegno automaticamente la porta 3000
 
 // Importo il router creato sul routers/posts.js
 const postsRouter = require('./routers/posts');
@@ -37,8 +37,7 @@ app.all('*', (req, res) => {
     res.status(404).send("<h1>404 - Pagina non trovata</h1>");
 });
 
-// Metto il server in ascolto su localhost e sulla porta 3000
-// La porta la richiamo dal mio file nascosto ".env" e importo la costante PORT con: process.env.PORT
-app.listen(process.env.PORT, () => {
-    console.log(`Server avviato su http://localhost:${process.env.PORT}`);
+// Metto il server in ascolto su localhost e sulla porta 3000 e richiamo la porta 3000
+app.listen(PORT, () => {
+    console.log(`Server avviato su http://localhost:${PORT}`);
 });
