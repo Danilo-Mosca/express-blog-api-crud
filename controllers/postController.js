@@ -60,7 +60,7 @@ function show(req, res) {
         return value.id === id;
     });
     /*** IN BASE ALL'ID INSERITO VISUALIZZO I COMMENTI ASSOCIATI AL POST. SE NON CI SONO COMMENTI PER QUEL POST AVRO' itemComments = [] VUOTO ***/
-    const itemComments = comments.filter((comment) => comment.post_id === id);
+    const itemComments = comments.filter((comment) => comment["post-id"] === id);
 
     // Se l'id dinamico inserito è stato trovato allora lo restituisco il json corrispondente a schermo con un ulteriore chiave "success" impostata a "true"
     if (item) {

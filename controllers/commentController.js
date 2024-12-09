@@ -63,7 +63,7 @@ function store(req, res) {
     newId++;
     const newComment = {
         id: newId,          // assegno l'id successivo
-        post_id: req.body.post_id,
+        "post-id": parseInt(req.body["post-id"]),
         name: req.body.name,
         comment: req.body.comment,
     };
@@ -92,7 +92,7 @@ function update(req, res) {
     /* Se tutto è andato bene modifico il commento: uso un ciclo for..in per modificare l'oggetto e assegnargli i nuovi valori */
     for (key in item) {
         // non devo ciclare sull'id, non va toccato. E nemmeno il post_id poichè il commento riguarda un post specifico
-        if ((key !== 'id') && (key !== 'post_id')) {
+        if ((key !== 'id') && (key !== 'post-id')) {
             item[key] = req.body[key];
         }
     }
